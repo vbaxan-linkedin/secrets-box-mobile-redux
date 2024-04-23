@@ -1,0 +1,169 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8910144920506665967",
+      "lastPropertyId": "6:3549488172383607523",
+      "name": "BoxSecret",
+      "properties": [
+        {
+          "id": "1:7072692067080899033",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3086122330036159295",
+          "name": "secretId",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "1:3879861875256792699"
+        },
+        {
+          "id": "3:68025771355691205",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "4:5781874868656237584",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:7973908070416220198",
+          "name": "dbSecretType",
+          "type": 9
+        },
+        {
+          "id": "6:3549488172383607523",
+          "name": "dbSecretData",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7360414649734488169",
+      "lastPropertyId": "4:5536159644083603207",
+      "name": "BoxSecretsCategory",
+      "properties": [
+        {
+          "id": "1:2608115674493969482",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4102602117217786647",
+          "name": "categoryId",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "2:6211943530575905948"
+        },
+        {
+          "id": "3:624179904788010018",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "4:5536159644083603207",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8503728241933579314",
+      "lastPropertyId": "6:8106139329895968968",
+      "name": "BoxSecretsEntry",
+      "properties": [
+        {
+          "id": "1:3201828170448442928",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1495136093319929539",
+          "name": "secretsEntryId",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "3:7963589441457825817"
+        },
+        {
+          "id": "3:7869261377797133243",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "4:8060292716590349236",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "5:7685907389030197474",
+          "name": "categoryIds",
+          "type": 30
+        },
+        {
+          "id": "6:8106139329895968968",
+          "name": "secretIds",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:6008413919446418150",
+      "lastPropertyId": "5:3463180685691989627",
+      "name": "BoxUser",
+      "properties": [
+        {
+          "id": "1:6709402498146597881",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5504990967489336219",
+          "name": "uuId",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "4:2481082767508528958"
+        },
+        {
+          "id": "3:4879076277833991771",
+          "name": "username",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "5:2746159677846355008"
+        },
+        {
+          "id": "4:5681733733223657759",
+          "name": "passwordHash",
+          "type": 9
+        },
+        {
+          "id": "5:3463180685691989627",
+          "name": "salt",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "4:6008413919446418150",
+  "lastIndexId": "5:2746159677846355008",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
