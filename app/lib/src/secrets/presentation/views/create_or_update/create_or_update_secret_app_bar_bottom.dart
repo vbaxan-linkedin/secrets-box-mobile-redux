@@ -4,9 +4,11 @@ class CreateOrUpdateSecretAppBarBottom extends StatelessWidget implements Prefer
   const CreateOrUpdateSecretAppBarBottom({
     super.key,
     this.titleController,
+    this.onTitleChanged,
   });
 
   final TextEditingController? titleController;
+  final ValueChanged<String>? onTitleChanged;
 
   @override
   Size get preferredSize => const Size.fromHeight(54.0);
@@ -31,13 +33,7 @@ class CreateOrUpdateSecretAppBarBottom extends StatelessWidget implements Prefer
           ),
           border: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.kIndigo50)),
         ),
-        onChanged: (String value) {
-          context.read<SecretsBloc>().add(
-                StoreCreateSecretsEntryInfoEvent(
-                  title: NewStateValue<String>(value),
-                ),
-              );
-        },
+        onChanged: onTitleChanged,
       ),
     );
   }

@@ -7,12 +7,11 @@ final class CreateOrUpdateSecretScreen extends StatefulWidget {
   State<CreateOrUpdateSecretScreen> createState() => _CreateOrUpdateSecretScreenState();
 }
 
-final class _CreateOrUpdateSecretScreenState extends State<CreateOrUpdateSecretScreen> {
+final class _CreateOrUpdateSecretScreenState extends StateWithStoreAndAfterInitMixins<CreateOrUpdateSecretScreen> {
   TextEditingController? _titleController;
 
   @override
-  void initState() {
-    super.initState();
+  void didInitState() {
     _titleController = TextEditingController();
   }
 
@@ -33,12 +32,19 @@ final class _CreateOrUpdateSecretScreenState extends State<CreateOrUpdateSecretS
             icon: const Icon(Icons.save),
             color: AppColors.kIndigo50,
             onPressed: () {
-              context.read<SecretsBloc>().add(const CreateOrUpdateSecretsEntry());
+              dispatch(const CreateOrUpdateSecretsEntryAction.start());
             },
           ),
         ],
         bottom: CreateOrUpdateSecretAppBarBottom(
           titleController: _titleController,
+          onTitleChanged: (String title) {
+            dispatch(
+              StoreCreateSecretsEntryInfo(
+                title: NewStateValue<String>(title),
+              ),
+            );
+          },
         ),
       ),
       child: const SizedBox.shrink(),

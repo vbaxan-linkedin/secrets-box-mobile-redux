@@ -8,9 +8,21 @@ final class SecretsScreen extends StatefulWidget {
 }
 
 final class _SecretsScreenState extends StateWithStoreAndAfterInitMixins<SecretsScreen> {
+  StreamSubscription<CreateOrUpdateSecretsEntryActionSuccessful>? _createSuccessfulSubscription;
+
   @override
   void didInitState() {
-    context.read<SecretsBloc>().add(const FetchSecretsEntriesEvent());
+    _createSuccessfulSubscription =
+        ActionInterceptor.of<CreateOrUpdateSecretsEntryActionSuccessful>(context)?.listen((event) {
+      dispatch(FetchSecretsEntriesAction.start());
+    });
+    dispatch(FetchSecretsEntriesAction.start());
+  }
+
+  @override
+  void dispose() {
+    _createSuccessfulSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -24,27 +36,24 @@ final class _SecretsScreenState extends StateWithStoreAndAfterInitMixins<Secrets
         child: Stack(
           alignment: Alignment.bottomRight,
           children: <Widget>[
-            BlocBuilder<SecretsBloc, SecretsState>(
-              builder: (BuildContext context, SecretsState state) {
-                if (state is FetchingSecretsEntries) {
+            SecretEntriesContainer(
+              builder: (BuildContext context, SecretEntriesViewModel vm) {
+                if (vm.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state is SecretsEntriesFetched) {
-                  if (state.entries.isEmpty) {
+                } else {
+                  if (vm.secretEntries.isEmpty) {
                     return Center(
-                      child: Text(
-                        S.of(context).noSecretsEntries,
-                        textAlign: TextAlign.center,
-                      )
-                    );
+                        child: Text(
+                      S.of(context).noSecretsEntries,
+                      textAlign: TextAlign.center,
+                    ));
                   } else {
                     return SecretsEntriesList(
-                      entries: state.entries,
+                      entries: vm.secretEntries,
                     );
                   }
-                } else {
-                  return const SizedBox.shrink();
                 }
               },
             ),

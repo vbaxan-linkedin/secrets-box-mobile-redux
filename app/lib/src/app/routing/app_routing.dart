@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:secrets_box/src/app/presentation/views/index.dart';
 import 'package:secrets_box/src/auth/presentation/views/index.dart';
 import 'package:secrets_box/src/secrets/routing/secrets_routing.dart';
+import 'package:secrets_box/src/settings/presentation/views/index.dart';
 
 part 'app_routing.g.dart';
 

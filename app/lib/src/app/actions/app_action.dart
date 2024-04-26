@@ -8,7 +8,9 @@ abstract interface class PendingAction extends AppAction {
   String get pendingId;
 }
 
-abstract interface class StartAction extends PendingAction {}
+abstract interface class StartAction extends PendingAction {
+  EntityCallback<AppAction>? get onResponse;
+}
 
 abstract interface class DoneAction extends PendingAction {}
 
