@@ -8,21 +8,9 @@ final class SecretsScreen extends StatefulWidget {
 }
 
 final class _SecretsScreenState extends StateWithStoreAndAfterInitMixins<SecretsScreen> {
-  StreamSubscription<CreateOrUpdateSecretsEntryActionSuccessful>? _createSuccessfulSubscription;
-
   @override
   void didInitState() {
-    _createSuccessfulSubscription =
-        ActionInterceptor.of<CreateOrUpdateSecretsEntryActionSuccessful>(context)?.listen((event) {
-      dispatch(FetchSecretsEntriesAction.start());
-    });
     dispatch(FetchSecretsEntriesAction.start());
-  }
-
-  @override
-  void dispose() {
-    _createSuccessfulSubscription?.cancel();
-    super.dispose();
   }
 
   @override
@@ -68,8 +56,11 @@ final class _SecretsScreenState extends StateWithStoreAndAfterInitMixins<Secrets
                       info: CreateSecretsEntryInfo.empty(),
                     ),
                   );
-                  Future<void>.delayed(const Duration(milliseconds: 150)).then((_) {
-                    const CreateOrUpdateSecretRoute().go(context);
+                  Future<void>.delayed(const Duration(milliseconds: 150)).then((_) async {
+                    final CreateOrUpdateSecretRoute? resultRoute = await CreateOrUpdateSecretRoute().push(context);
+                    if (resultRoute?.result == CreateOrUpdateSecretRouteResult.secretCreated) {
+                      dispatch(FetchSecretsEntriesAction.start());
+                    }
                   });
                 },
               ),

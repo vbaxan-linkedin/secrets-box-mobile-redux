@@ -8,7 +8,7 @@ part 'secrets_routing.g.dart';
   path: '/secrets',
   routes: <TypedGoRoute<GoRouteData>>[
     TypedGoRoute<CreateOrUpdateSecretRoute>(
-      path: 'createOrUpdateSecret',
+      path: 'createOrUpdateSecret/:result',
     ),
   ],
 )
@@ -24,25 +24,27 @@ final class SecretsScreenRoute extends GoRouteData {
 
 @immutable
 final class CreateOrUpdateSecretRoute extends GoRouteData {
-  const CreateOrUpdateSecretRoute();
+  const CreateOrUpdateSecretRoute({
+    this.result = CreateOrUpdateSecretRouteResult.toCreateScreen,
+  });
+
+  final CreateOrUpdateSecretRouteResult result;
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return CustomTransitionPage<CreateOrUpdateSecretRoute>(
       child: const CreateOrUpdateSecretScreen(),
       transitionsBuilder: (
-          BuildContext context,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-          Widget child,
-          ) {
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) {
         return SlideTransition(
-          position: animation.drive(
-              Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).chain(CurveTween(curve: Curves.linear))
-          ),
+          position: animation.drive(Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.linear))),
           child: child,
         );
       },
@@ -50,3 +52,5 @@ final class CreateOrUpdateSecretRoute extends GoRouteData {
     );
   }
 }
+
+enum CreateOrUpdateSecretRouteResult { toCreateScreen, secretCreated }

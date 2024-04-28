@@ -21,6 +21,16 @@ final class _CreateOrUpdateSecretScreenState extends StateWithStoreAndAfterInitM
     super.dispose();
   }
 
+  void _onResponse(AppAction action) {
+    if (action is CreateOrUpdateSecretsEntryActionSuccessful) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        goRouter.pop(const CreateOrUpdateSecretRoute(
+          result: CreateOrUpdateSecretRouteResult.secretCreated
+        ));
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppScreen.normal(
@@ -32,7 +42,11 @@ final class _CreateOrUpdateSecretScreenState extends StateWithStoreAndAfterInitM
             icon: const Icon(Icons.save),
             color: AppColors.kIndigo50,
             onPressed: () {
-              dispatch(const CreateOrUpdateSecretsEntryAction.start());
+              dispatch(
+                CreateOrUpdateSecretsEntryAction.start(
+                  onResponse: _onResponse,
+                ),
+              );
             },
           ),
         ],

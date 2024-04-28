@@ -15,7 +15,7 @@ RouteBase get $secretsScreenRoute => GoRouteData.$route(
       factory: $SecretsScreenRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'createOrUpdateSecret',
+          path: 'createOrUpdateSecret/:result',
           factory: $CreateOrUpdateSecretRouteExtension._fromState,
         ),
       ],
@@ -41,10 +41,14 @@ extension $SecretsScreenRouteExtension on SecretsScreenRoute {
 
 extension $CreateOrUpdateSecretRouteExtension on CreateOrUpdateSecretRoute {
   static CreateOrUpdateSecretRoute _fromState(GoRouterState state) =>
-      const CreateOrUpdateSecretRoute();
+      CreateOrUpdateSecretRoute(
+        result: _$CreateOrUpdateSecretRouteResultEnumMap
+                ._$fromName(state.pathParameters['result']!) ??
+            CreateOrUpdateSecretRouteResult.toCreateScreen,
+      );
 
   String get location => GoRouteData.$location(
-        '/secrets/createOrUpdateSecret',
+        '/secrets/createOrUpdateSecret/${Uri.encodeComponent(_$CreateOrUpdateSecretRouteResultEnumMap[result]!)}',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -55,4 +59,14 @@ extension $CreateOrUpdateSecretRouteExtension on CreateOrUpdateSecretRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+const _$CreateOrUpdateSecretRouteResultEnumMap = {
+  CreateOrUpdateSecretRouteResult.toCreateScreen: 'to-create-screen',
+  CreateOrUpdateSecretRouteResult.secretCreated: 'secret-created',
+};
+
+extension<T extends Enum> on Map<T, String> {
+  T _$fromName(String value) =>
+      entries.singleWhere((element) => element.value == value).key;
 }
